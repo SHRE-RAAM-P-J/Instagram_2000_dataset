@@ -23,7 +23,7 @@ warnings.filterwarnings('ignore')
 # =============================================================================
 st.set_page_config(
     page_title="SR NEXT — Influencer Analytics",
-    page_icon="📊",
+    page_icon="",
     layout="wide",
     initial_sidebar_state="expanded"
 )
@@ -272,23 +272,23 @@ with st.spinner("Loading and processing influencer data..."):
 # SIDEBAR — Global Filters
 # =============================================================================
 with st.sidebar:
-    st.markdown("## 🎛️ Global Filters")
+    st.markdown("## Global Filters")
     st.markdown("Filters apply to all pages")
     st.divider()
 
     # Category filter
     all_cats = ['All Categories'] + sorted(df['Broad_Category'].unique().tolist())
-    sel_cat  = st.selectbox("📂 Category", all_cats)
+    sel_cat  = st.selectbox("Category", all_cats)
 
     # Tier filter
     all_tiers = ['All Tiers'] + sorted(df['Tier'].unique().tolist())
-    sel_tier  = st.selectbox("🏆 Tier", all_tiers)
+    sel_tier  = st.selectbox("Tier", all_tiers)
 
     # Automation filter
-    sel_auto = st.selectbox("🤖 Automation Risk", ['All', 'Low', 'Medium', 'High'])
+    sel_auto = st.selectbox("Automation Risk", ['All', 'Low', 'Medium', 'High'])
 
     # Follower range slider
-    st.markdown("**👥 Follower Range**")
+    st.markdown("**Follower Range**")
     min_f, max_f = int(df['Followers'].min()), int(df['Followers'].max())
     follower_range = st.slider(
         "Followers", min_value=min_f, max_value=max_f,
@@ -296,11 +296,11 @@ with st.sidebar:
     )
 
     # Engagement rate slider
-    st.markdown("**💬 Min Engagement Rate (%)**")
+    st.markdown("**Min Engagement Rate (%)**")
     min_er = st.slider("Min ER", 0.0, 20.0, 0.0, step=0.1)
 
     # Influence Score slider
-    st.markdown("**⭐ Min Influence Score**")
+    st.markdown("**Min Influence Score**")
     min_score = st.slider("Min Score", 0, 100, 0)
 
     st.divider()
@@ -323,7 +323,7 @@ filtered = filtered[
 # =============================================================================
 # MAIN HEADER
 # =============================================================================
-st.markdown("# 📊 SR NEXT — Instagram Influencer Analytics")
+st.markdown("# SR NEXT — Instagram Influencer Analytics")
 st.markdown(f"**Phase 2 · AI-Powered Analysis · {len(filtered):,} influencers shown** (of {len(df):,} total)")
 st.divider()
 
@@ -332,12 +332,12 @@ st.divider()
 # TABS
 # =============================================================================
 tab1, tab2, tab3, tab4, tab5, tab6 = st.tabs([
-    "🏠 Overview",
-    "🏆 Rankings",
-    "📂 Categories",
-    "📈 Engagement",
-    "🤖 Automation",
-    "🔍 Explorer"
+    "Overview",
+    "Rankings",
+    "Categories",
+    "Engagement",
+    "Automation",
+    "Explorer"
 ])
 
 
@@ -435,7 +435,7 @@ with tab1:
         st.plotly_chart(fig_freq, use_container_width=True)
 
     # Key Insights
-    st.markdown("### 💡 Key Insights")
+    st.markdown("### Key Insights")
     top1 = filtered.iloc[0] if len(filtered) > 0 else None
     if empty:
         st.warning('No influencers match the current filter combination. Try adjusting the sidebar filters.')
@@ -456,7 +456,7 @@ with tab1:
 # TAB 2 — RANKINGS
 # ══════════════════════════════════════════════════════════════════════════════
 with tab2:
-    st.markdown("## 🏆 Influencer Rankings")
+    st.markdown("## Influencer Rankings")
     st.caption("Ranked by composite Influence Score: ER×40% + Frequency×25% + Followers×20% + Hashtags×15%")
 
     top_n = st.slider("Show Top N influencers in chart", 10, 50, 20, step=5)
@@ -493,7 +493,7 @@ with tab2:
 
     st.dataframe(show_df, use_container_width=True, height=450)
     st.download_button(
-        "⬇️ Download Filtered Data as CSV",
+        "Download Filtered Data as CSV",
         filtered[display_cols].to_csv(index=False),
         file_name="filtered_influencers.csv",
         mime="text/csv"
@@ -504,7 +504,7 @@ with tab2:
 # TAB 3 — CATEGORIES
 # ══════════════════════════════════════════════════════════════════════════════
 with tab3:
-    st.markdown("## 📂 Category Analysis")
+    st.markdown("## Category Analysis")
 
     cat_stats = filtered.groupby('Broad_Category').agg(
         Count=('Username', 'count'),
@@ -581,7 +581,7 @@ with tab3:
 # TAB 4 — ENGAGEMENT ANALYSIS
 # ══════════════════════════════════════════════════════════════════════════════
 with tab4:
-    st.markdown("## 📈 Engagement Analysis")
+    st.markdown("## Engagement Analysis")
 
     # Scatter plot
     scatter_df = filtered[filtered['Engagement Rate'] <= 1.0].copy()
@@ -634,7 +634,7 @@ with tab4:
 # TAB 5 — AUTOMATION RISK
 # ══════════════════════════════════════════════════════════════════════════════
 with tab5:
-    st.markdown("## 🤖 Automation Risk Analysis")
+    st.markdown("## Automation Risk Analysis")
     st.caption("Accounts flagged based on ER anomalies and posting frequency patterns")
 
     col1, col2, col3 = st.columns(3)
@@ -643,7 +643,7 @@ with tab5:
     col3.metric("🟢 Low Risk",    len(filtered[filtered['Automation_Likelihood']=='Low']))
 
     # Detection logic explanation
-    with st.expander("📖 How Automation is Detected"):
+    with st.expander("How Automation is Detected"):
         st.markdown("""
 | Risk Level | Condition | Reasoning |
 |---|---|---|
@@ -687,11 +687,11 @@ with tab5:
 # TAB 6 — EXPLORER
 # ══════════════════════════════════════════════════════════════════════════════
 with tab6:
-    st.markdown("## 🔍 Influencer Explorer")
+    st.markdown("## Influencer Explorer")
     st.caption("Search and explore all influencers in real time")
 
     # Search
-    search = st.text_input("🔎 Search by username or category", "")
+    search = st.text_input("Search by username or category", "")
 
     exp_df = filtered.copy()
     if search:
@@ -718,7 +718,7 @@ with tab6:
 
     # Download filtered results
     st.download_button(
-        "⬇️ Download These Results as CSV",
+        "⬇Download These Results as CSV",
         exp_df.to_csv(index=False),
         file_name=f"influencers_search_{search or 'all'}.csv",
         mime="text/csv"

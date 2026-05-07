@@ -40,7 +40,7 @@ def log(step, msg):
     print(f"{'='*60}")
 
 def ok(msg):
-    print(f"  ✅ {msg}")
+    print(f"  {msg}")
 
 def info(msg):
     print(f"  → {msg}")
@@ -69,7 +69,7 @@ log(1, "Locating input dataset")
 
 input_file = find_input_file()
 if input_file is None:
-    print("\n  ❌ ERROR: Could not find input Excel file.")
+    print("\n   ERROR: Could not find input Excel file.")
     print("  Please make sure one of these files exists:")
     print("    • data/Final_phase_2.xlsx")
     print("    • data/cleaned_influencers_sorted.xlsx")
@@ -101,7 +101,7 @@ if 'Username' not in df.columns:
             break
 
 if 'Username' not in df.columns:
-    print("  ❌ ERROR: Could not find 'Username' column in the file.")
+    print("   ERROR: Could not find 'Username' column in the file.")
     print(f"     Columns found: {df.columns.tolist()[:5]}")
     print("     Please use the raw Phase 1 Excel file, not the formatted output.")
     sys.exit(1)
@@ -320,7 +320,7 @@ if not args.skip_ml:
         ok(f"ER Predictor trained — R²: {r2:.4f}, MAE: {mae*100:.2f}%")
 
     except ImportError:
-        print("  ⚠️  scikit-learn not installed — skipping ML models")
+        print("     scikit-learn not installed — skipping ML models")
         print("     Run: pip install scikit-learn")
 else:
     info("Skipping ML models (--skip-ml flag set)")
@@ -389,7 +389,7 @@ if not args.no_dashboard:
         print("  → Press Ctrl+C to stop the dashboard\n")
         os.system('python -m streamlit run streamlit_app.py')
     else:
-        print("\n  ⚠️  streamlit_app.py not found — skipping dashboard launch")
+        print("\n   streamlit_app.py not found — skipping dashboard launch")
         print("     Make sure streamlit_app.py is in the same folder")
 else:
     print("\n  Dashboard launch skipped (--no-dashboard flag set)")

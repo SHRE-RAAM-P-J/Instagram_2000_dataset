@@ -108,7 +108,7 @@ rf_classifier.fit(X_train_c, y_train_c)
 y_pred_c = rf_classifier.predict(X_test_c)
 accuracy  = accuracy_score(y_test_c, y_pred_c)
 
-print(f"\n✅ Model Accuracy: {accuracy * 100:.2f}%")
+print(f"\nModel Accuracy: {accuracy * 100:.2f}%")
 print("\nClassification Report:")
 print(classification_report(y_test_c, y_pred_c))
 
@@ -134,7 +134,7 @@ plt.xlabel('Predicted Label')
 plt.tight_layout()
 plt.savefig('confusion_matrix_automation.png', dpi=150, bbox_inches='tight')
 plt.close()
-print("\n📊 Confusion matrix saved as: confusion_matrix_automation.png")
+print("\nConfusion matrix saved as: confusion_matrix_automation.png")
 
 # ── Feature Importance Plot ───────────────────────────────────────────────────
 plt.figure(figsize=(8, 4))
@@ -144,7 +144,7 @@ plt.xlabel('Importance Score')
 plt.tight_layout()
 plt.savefig('feature_importance_automation.png', dpi=150, bbox_inches='tight')
 plt.close()
-print("📊 Feature importance saved as: feature_importance_automation.png")
+print("Feature importance saved as: feature_importance_automation.png")
 
 # ── Apply model predictions back to full dataset ──────────────────────────────
 df['ML_Automation_Prediction'] = rf_classifier.predict(X)
@@ -194,7 +194,7 @@ mae_rf = mean_absolute_error(y_test_r, y_pred_rf)
 r2_rf  = r2_score(y_test_r, y_pred_rf)
 rmse_rf = np.sqrt(mean_squared_error(y_test_r, y_pred_rf))
 
-print(f"\n✅ Random Forest Regressor Results:")
+print(f"\nRandom Forest Regressor Results:")
 print(f"   R² Score (accuracy of fit) : {r2_rf:.4f}  (1.0 = perfect)")
 print(f"   MAE (avg prediction error) : {mae_rf:.4f} ({mae_rf*100:.2f}%)")
 print(f"   RMSE                       : {rmse_rf:.4f}")
@@ -211,11 +211,11 @@ y_pred_lr = lr_regressor.predict(X_test_s)
 mae_lr = mean_absolute_error(y_test_r, y_pred_lr)
 r2_lr  = r2_score(y_test_r, y_pred_lr)
 
-print(f"\n✅ Linear Regression Results:")
+print(f"\nLinear Regression Results:")
 print(f"   R² Score : {r2_lr:.4f}")
 print(f"   MAE      : {mae_lr:.4f} ({mae_lr*100:.2f}%)")
 
-print(f"\n🏆 Better model: {'Random Forest' if r2_rf > r2_lr else 'Linear Regression'}")
+print(f"\nBetter model: {'Random Forest' if r2_rf > r2_lr else 'Linear Regression'}")
 
 # ── Feature Importance for Regression ────────────────────────────────────────
 importances_r = pd.Series(rf_regressor.feature_importances_, index=FEATURES)
@@ -233,7 +233,7 @@ plt.legend()
 plt.tight_layout()
 plt.savefig('actual_vs_predicted_er.png', dpi=150, bbox_inches='tight')
 plt.close()
-print("\n📊 Actual vs Predicted plot saved as: actual_vs_predicted_er.png")
+print("\nActual vs Predicted plot saved as: actual_vs_predicted_er.png")
 
 # ── Feature Importance Regression Plot ───────────────────────────────────────
 plt.figure(figsize=(8, 4))
@@ -243,7 +243,7 @@ plt.xlabel('Importance Score')
 plt.tight_layout()
 plt.savefig('feature_importance_er.png', dpi=150, bbox_inches='tight')
 plt.close()
-print("📊 Feature importance saved as: feature_importance_er.png")
+print("Feature importance saved as: feature_importance_er.png")
 
 # Apply predictions back to dataset
 X_full_s = scaler.transform(X_reg[FEATURES].fillna(X_reg[FEATURES].median()))
@@ -273,7 +273,7 @@ output_cols = [
 output_cols = [c for c in output_cols if c in df.columns]
 df_out = df[output_cols].fillna('')
 df_out.to_csv('SR_NEXT_Phase2_ML_Results.csv', index=False)
-print(f"✅ ML results CSV saved: SR_NEXT_Phase2_ML_Results.csv")
+print(f"ML results CSV saved: SR_NEXT_Phase2_ML_Results.csv")
 print(f"   Rows: {len(df_out):,}")
 
 
@@ -302,4 +302,4 @@ print(f"  feature_importance_automation.png")
 print(f"  actual_vs_predicted_er.png")
 print(f"  feature_importance_er.png")
 
-print("\n✅ All ML models complete!")
+print("\nAll ML models complete!")
